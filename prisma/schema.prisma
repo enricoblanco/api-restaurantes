@@ -11,10 +11,51 @@ datasource db {
 }
 
 model User {
-  user_id   Int      @id @default(autoincrement())
-  username  String?
-  email     String   @unique
-  password  String
+  id          Int      @id @default(autoincrement())
+  nome        String
+  email       String   @unique
+  senha       String
+  foto        String?
+  avaliacoes  Review[]
+  createdAt   DateTime @default(now())
+  Post        Post[]
 
   @@map("users")
 }
+
+model Restaurant {
+  id              String   @id
+  name            String
+  addres          String
+  telephone       String
+  details         String
+  photo_url       String?
+  createdAt       DateTime @default(now())
+  reviews  Review[]
+
+  @@map("restaurants")
+}
+
+model Review {
+  id             Int      @id @default(autoincrement())
+  nota          Int
+  review        String?
+  user          User  @relation(fields: [usuarioId], references: [id])
+  restaurant    Restaurant @relation(fields: [restauranteId], references: [id])
+  usuarioId     Int
+  restauranteId String
+  createdAt     DateTime @default(now())
+
+  @@map("reviews")
+}
+
+model Post {
+  id        Int      @id @default(autoincrement())
+  title     String?
+  content   String?
+  user_id   Int
+  author    User @relation(fields: [user_id], references: [id])
+
+  @@map("posts")
+}
+
