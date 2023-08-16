@@ -1,7 +1,19 @@
-import { type Express } from 'express'
+import Express from 'express'
+import UserController from './controllers/UserController'
+import PostController from './controllers/PostController'
 
-export default (app: Express) => {
-  app.get('/', (req, res) => {
-    res.send('Hello World!')
-  })
-}
+const app = Express()
+app.use(Express.json())
+const PORT = 8000
+
+app.get('/', (req, res) => res.send({ message: 'Hello World' }))
+
+app.post('/createUser', UserController.createUser)
+app.post('/createPost', PostController.createPost)
+app.get('/listPost/:id', PostController.listPost)
+app.put('/updatePost', PostController.updatePost)
+app.delete('/deletePost/:id', PostController.deletePost)
+
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`)
+})
