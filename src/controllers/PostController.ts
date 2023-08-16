@@ -98,13 +98,13 @@ export default {
         return res.json({ error: true, message: 'Post not found' })
       }
 
-      prisma.post.delete({
+      const post = await prisma.post.delete({
         where: {
           id: Number(req.params.id)
         }
       })
 
-      return res.json({ error: false, message: 'Success: post deleted' })
+      return res.json({ error: false, message: 'Success: post deleted', post })
     } catch (error) {
       return res.json({ error: error.message })
     }
