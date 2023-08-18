@@ -17,10 +17,11 @@
     },
     "plugins": [
         "@typescript-eslint",
-        "eslint-plugin-import-helpers",
         "prettier"
     ],
     "rules": {
+        "radix": "off",
+        "class-methods-use-this":"off",
         "import/prefer-default-export": "off",
         "no-unused-vars": "off",
         "@typescript-eslint/naming-convention": "off",
