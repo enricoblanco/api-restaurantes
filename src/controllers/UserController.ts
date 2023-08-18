@@ -1,5 +1,7 @@
 import { Request, Response } from 'express'
 import { prisma } from '../database'
+import { UserRepository } from '../repositories/UserRepository'
+import { CreateUserService } from '../services/User/CreateUserService'
 
 export default {
   async createUser(req: Request, res: Response) {
@@ -11,13 +13,10 @@ export default {
         return res.json({ error: true, message: 'email already exists' })
       }
 
-      const user = await prisma.user.create({
-        data: {
-          name,
-          email,
-          password
-        }
-      })
+      const createUser = new CreateUserService(new UserRepository())
+
+      const user = await createUser.execute(name, email, password)
+
       return res.json({
         error: true,
         message: 'Success: user registered',

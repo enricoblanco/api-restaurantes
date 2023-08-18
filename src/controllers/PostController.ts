@@ -43,17 +43,14 @@ export default {
     }
   },
 
-  // Função para fazer o update de um post
   async updatePost(req: Request, res: Response) {
     try {
-      // Os parametros que a req vai receber
       const { id, title, content } = req.body
 
       const updatePost = new UpdatePostService(new PostRepository())
 
       const post = await updatePost.execute(id, title, content)
 
-      // Se não existir, retorna um erro
       if (!post) {
         return res.json({ error: true, message: 'Post not found' })
       }
